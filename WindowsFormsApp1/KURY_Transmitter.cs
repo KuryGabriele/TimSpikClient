@@ -4,26 +4,31 @@ using System.Net.Sockets;
 using System.Text;
 
 namespace WindowsFormsApp1 {
-    public class VBAN_Transmitter {
+    public class KURY_Transmitter {
         public static UdpClient socket;
         public static WaveIn wi;
-        public static float volume;
-        private const int PORT = 6981;
-        private const string IP = "127.0.0.1";
+        public static float volume; //Not used
+        private int port = 6981;
+        private string ipAddr = "192.168.1.3";
+        private string nick;
 
-        public VBAN_Transmitter() {
+        public KURY_Transmitter(string ipAddr, int port, string nick) {
             //Audio stuff
             Console.WriteLine("Transmitter started");
+            this.ipAddr = ipAddr;
+            this.port = port;
             wi = new WaveIn();
-            wi.WaveFormat = new WaveFormat(96000, 16, 2);
+            wi.WaveFormat = new WaveFormat(48000, 16, 2);
             wi.DeviceNumber = 0;
 
             wi.DataAvailable += new EventHandler<WaveInEventArgs>(sendData);
+
+            this.nick = nick;
         }
 
         public void startMic() {
             try {
-                socket = new UdpClient(IP, PORT);
+                socket = new UdpClient(ipAddr, port);
                 wi.StartRecording();
             } catch (Exception e) {
                 wi.StopRecording();
@@ -34,11 +39,27 @@ namespace WindowsFormsApp1 {
 
         void sendData(object sender, WaveInEventArgs e) {
             //KURY string
-            byte[] b = Encoding.UTF8.GetBytes("KURY".ToCharArray(), 0, 4);
+            var b = Encoding.UTF8.GetBytes("KURY".ToCharArray(), 0, 4);
+
+            var n = new byte[16];
+
+            var nickChars = nick.ToCharArray();
+            var nickByte = Encoding.UTF8.GetBytes(nickChars, 0, nickChars.Length);
+            nickByte.CopyTo(n, 0);
+
+            var space = new char[1];
+            space[0] = '\t';
+
+            var spacesBytes = Encoding.UTF8.GetBytes(space, 0, 1);
+            for (int i = nick.Length; i < 16; i++) {
+                spacesBytes.CopyTo(n, i);
+            }
+            
             //Audio data
-            byte[] packet = new byte[b.Length + e.Buffer.Length];
+            byte[] packet = new byte[b.Length + n.Length + e.Buffer.Length];
             Buffer.BlockCopy(b, 0, packet, 0, b.Length);
-            Buffer.BlockCopy(e.Buffer, 0, packet, b.Length, e.Buffer.Length);
+            Buffer.BlockCopy(n, 0, packet, 4, n.Length);
+            Buffer.BlockCopy(e.Buffer, 0, packet, b.Length + n.Length, e.Buffer.Length);
             //Send
             socket.Send(packet, packet.Length);
         }

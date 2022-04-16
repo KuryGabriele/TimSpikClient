@@ -27,6 +27,7 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.saveBtn = new System.Windows.Forms.Button();
             this.nickBox = new System.Windows.Forms.TextBox();
+            this.ipBox = new System.Windows.Forms.TextBox();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -44,6 +45,7 @@
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(38)))), ((int)(((byte)(54)))));
+            this.panel1.Controls.Add(this.ipBox);
             this.panel1.Controls.Add(this.saveBtn);
             this.panel1.Controls.Add(this.nickBox);
             this.panel1.Location = new System.Drawing.Point(12, 48);
@@ -78,6 +80,13 @@
             this.nickBox.TabIndex = 0;
             this.nickBox.Text = "Kury";
             // 
+            // ipBox
+            // 
+            this.ipBox.Location = new System.Drawing.Point(6, 97);
+            this.ipBox.Name = "ipBox";
+            this.ipBox.Size = new System.Drawing.Size(189, 20);
+            this.ipBox.TabIndex = 11;
+            // 
             // NickRequest
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -103,5 +112,6 @@
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.TextBox nickBox;
         private System.Windows.Forms.Button saveBtn;
+        private System.Windows.Forms.TextBox ipBox;
     }
 }

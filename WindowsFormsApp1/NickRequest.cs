@@ -15,7 +15,7 @@ namespace WindowsFormsApp1 {
         }
 
         private void saveBtn_Click(object sender, EventArgs e) {
-            Form1.nickUtente = nickBox.Text;
+            Form1.nickname = nickBox.Text;
             this.Close();
         }
     }

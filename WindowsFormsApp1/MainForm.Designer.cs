@@ -32,7 +32,7 @@
             this.closeBtn = new System.Windows.Forms.Button();
             this.logoBox = new System.Windows.Forms.PictureBox();
             this.topPanel = new System.Windows.Forms.Panel();
-            this.pannelloUtenti = new System.Windows.Forms.FlowLayoutPanel();
+            this.userPane = new System.Windows.Forms.FlowLayoutPanel();
             this.minimizeBtn = new System.Windows.Forms.Button();
             this.chatPanel = new System.Windows.Forms.FlowLayoutPanel();
             this.txtBox = new System.Windows.Forms.RichTextBox();
@@ -87,13 +87,13 @@
             this.topPanel.MouseMove += new System.Windows.Forms.MouseEventHandler(this.topPanel_MouseMove);
             this.topPanel.MouseUp += new System.Windows.Forms.MouseEventHandler(this.topPanel_MouseUp);
             // 
-            // pannelloUtenti
+            // userPane
             // 
-            this.pannelloUtenti.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(38)))), ((int)(((byte)(54)))));
-            this.pannelloUtenti.Location = new System.Drawing.Point(12, 107);
-            this.pannelloUtenti.Name = "pannelloUtenti";
-            this.pannelloUtenti.Size = new System.Drawing.Size(263, 412);
-            this.pannelloUtenti.TabIndex = 3;
+            this.userPane.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(38)))), ((int)(((byte)(54)))));
+            this.userPane.Location = new System.Drawing.Point(12, 107);
+            this.userPane.Name = "userPane";
+            this.userPane.Size = new System.Drawing.Size(263, 412);
+            this.userPane.TabIndex = 3;
             // 
             // minimizeBtn
             // 
@@ -241,7 +241,7 @@
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.chatPanel);
             this.Controls.Add(this.minimizeBtn);
-            this.Controls.Add(this.pannelloUtenti);
+            this.Controls.Add(this.userPane);
             this.Controls.Add(this.topPanel);
             this.Controls.Add(this.logoBox);
             this.Controls.Add(this.closeBtn);
@@ -260,7 +260,7 @@
         private System.Windows.Forms.Button closeBtn;
         private System.Windows.Forms.PictureBox logoBox;
         private System.Windows.Forms.Panel topPanel;
-        private System.Windows.Forms.FlowLayoutPanel pannelloUtenti;
+        private System.Windows.Forms.FlowLayoutPanel userPane;
         private System.Windows.Forms.Button minimizeBtn;
         private System.Windows.Forms.FlowLayoutPanel chatPanel;
         private System.Windows.Forms.RichTextBox txtBox;

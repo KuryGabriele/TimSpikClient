@@ -4,8 +4,9 @@ using System.Drawing.Drawing2D;
 using System.Windows.Forms;
 
 namespace WindowsFormsApp1 {
-    class ImmagineUtente : PictureBox {
-        public ImmagineUtente() {
+    class UserImage : PictureBox {
+        //This is just a round PictureBox used for the profile pictures
+        public UserImage() {
             this.BackColor = Color.DarkGray;
         }
         protected override void OnResize(EventArgs e) {

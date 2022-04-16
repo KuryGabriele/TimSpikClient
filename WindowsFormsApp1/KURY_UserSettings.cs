@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Configuration;
+using TimSpik;
 
 namespace WindowsFormsApp1 {
-    public class VBANUserSettings : ApplicationSettingsBase{
+    public class KURYUserSettings : ApplicationSettingsBase{
 
         [UserScopedSetting()]
         [DefaultSettingValue("00000000-0000-0000-0000-000000000000")]
@@ -39,23 +41,23 @@ namespace WindowsFormsApp1 {
 
         [UserScopedSetting()]
         [DefaultSettingValue("1")]
-        public float Volume {
-            get {
-                return ((float)this["Volume"]);
-            }
-            set {
-                this["Volume"] = (float)value;
-            }
-        }
-
-        [UserScopedSetting()]
-        [DefaultSettingValue("1")]
         public float VolumeMic {
             get {
                 return ((float)this["VolumeMic"]);
             }
             set {
                 this["VolumeMic"] = (float)value;
+            }
+        }
+
+        [UserScopedSetting()]
+        [DefaultSettingValue("127.0.0.1")]
+        public string ipAddr {
+            get {
+                return ((string)this["ipAddr"]);
+            }
+            set {
+                this["ipAddr"] = (string)value;
             }
         }
     }

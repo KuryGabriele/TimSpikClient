@@ -1,5 +1,5 @@
 ﻿namespace WindowsFormsApp1 {
-    partial class OpzioniUtente {
+    partial class UserOptions {
         /// <summary>
         /// Required designer variable.
         /// </summary>
@@ -136,7 +136,7 @@
             this.kick_btn.Text = "Kick";
             this.kick_btn.UseVisualStyleBackColor = false;
             // 
-            // OpzioniUtente
+            // UserOptions
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -147,7 +147,7 @@
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.close_btn);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-            this.Name = "OpzioniUtente";
+            this.Name = "UserOptions";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Form2";
             this.panel1.ResumeLayout(false);
