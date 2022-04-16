@@ -29,6 +29,24 @@ namespace WindowsFormsApp1 {
         public void startMic() {
             try {
                 socket = new UdpClient(ipAddr, port);
+
+                byte[] packet = new byte[20];
+                var b = Encoding.UTF8.GetBytes("JOIN".ToCharArray(), 0, 4);
+                b.CopyTo(packet, 0);
+
+                var nickChars = nick.ToCharArray();
+                var nickByte = Encoding.UTF8.GetBytes(nickChars, 0, nickChars.Length);
+                nickByte.CopyTo(packet, 4);
+
+                var space = new char[1];
+                space[0] = '\t';
+
+                var spacesBytes = Encoding.UTF8.GetBytes(space, 0, 1);
+                for (int i = nick.Length; i < 16; i++) {
+                    spacesBytes.CopyTo(packet, i);
+                }
+
+                socket.Send(packet, packet.Length);
                 wi.StartRecording();
             } catch (Exception e) {
                 wi.StopRecording();
@@ -61,6 +79,27 @@ namespace WindowsFormsApp1 {
             Buffer.BlockCopy(n, 0, packet, 4, n.Length);
             Buffer.BlockCopy(e.Buffer, 0, packet, b.Length + n.Length, e.Buffer.Length);
             //Send
+            socket.Send(packet, packet.Length);
+        }
+
+        public async void sendQuit() {
+            byte[] packet = new byte[20];
+            var b = Encoding.UTF8.GetBytes("QUIT".ToCharArray(), 0, 4);
+            b.CopyTo(packet, 0);
+
+            var nickChars = nick.ToCharArray();
+            var nickByte = Encoding.UTF8.GetBytes(nickChars, 0, nickChars.Length);
+            nickByte.CopyTo(packet, 4);
+
+            var space = new char[1];
+            space[0] = '\t';
+
+            var spacesBytes = Encoding.UTF8.GetBytes(space, 0, 1);
+            for (int i = nick.Length; i < 16; i++) {
+                spacesBytes.CopyTo(packet, i);
+            }
+
+            socket.Send(packet, packet.Length);
             socket.Send(packet, packet.Length);
         }
     }

@@ -23,11 +23,14 @@ namespace WindowsFormsApp1 {
         List<String> users; //Users nicknames
         List<WaveOut> userVolumes; //Used to change volume per user
         List<float> volumes;
+        Form1 form;
 
-        public KURY_Receiver(List<String> users, String address, int port) {
+        public KURY_Receiver(List<String> users, String address, int port, Form1 form) {
             this.users = users;
             this.serverAddress = address;
             this.port = port;   
+            this.form = form;
+
             audioSources = new List<BufferedWaveProvider> ();
             audioOutputs = new List<DirectSoundOut> ();
             userVolumes = new List<WaveOut> ();
@@ -98,18 +101,20 @@ namespace WindowsFormsApp1 {
         private void parsePacket(Byte[] data) {
             //Verify if packet is a KURY packet
             kuryString = Encoding.UTF8.GetString(data, 0, 4);
-            if(!kuryString.Equals("KURY")) {
+            if(kuryString.Equals("KURY")) {
+                //Get users nickname
+                var streamNick = Encoding.UTF8.GetString(data, 4, 16);
+                streamNick = streamNick.Trim();
+                int index = users.FindIndex(x => x.StartsWith(streamNick));
+                //Push audio to right device
+                audioSources.ElementAt(index).AddSamples(data, 20, data.Length - 20);
+                //Start the audio output
+                audioOutputs.ElementAt(index).Play();
+            } else if (kuryString.Equals("UPDT")) {
+                form.updateOnlineUsers();
+            } else {
                 throw new IndexOutOfRangeException("Not a KURY packet");
             }
-
-            //Get users nickname
-            var streamNick = Encoding.UTF8.GetString(data, 4, 16);
-            streamNick = streamNick.Trim();
-            int index = users.FindIndex(x => x.StartsWith(streamNick));
-            //Push audio to right device
-            audioSources.ElementAt(index).AddSamples(data, 20, data.Length - 20);
-            //Start the audio output
-            audioOutputs.ElementAt(index).Play();
         }
     }
 }

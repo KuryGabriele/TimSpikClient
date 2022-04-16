@@ -93,7 +93,7 @@ namespace WindowsFormsApp1
             port = data.port;
         }
 
-        private async void updateOnlineUsers() {
+        public async void updateOnlineUsers() {
             userPane.Controls.Clear();
 
             HttpClient apiClient = new HttpClient();
@@ -116,6 +116,7 @@ namespace WindowsFormsApp1
             if(!closeConfirmation || MessageBox.Show("Sei sicuro di voler abbandonare i tuoi amici?", "Chiudere?", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes) {
                 if (inRoom) {
                     //stop the audio
+                    vt.sendQuit();
                     trd.Abort();
                     trd2.Abort();
                 }
@@ -288,6 +289,7 @@ namespace WindowsFormsApp1
                 rcv.socket.Dispose();
 
                 //Stop the transmitter
+                vt.sendQuit();
                 KURY_Transmitter.wi.StopRecording();
 
                 //Stop the threads
@@ -307,7 +309,7 @@ namespace WindowsFormsApp1
                 settingsBtn.Enabled = false;
 
                 //Start audio streams
-                rcv = new KURY_Receiver(usersOnline, ipAddr, port);
+                rcv = new KURY_Receiver(usersOnline, ipAddr, port, this);
                 trd = new Thread(new ThreadStart(startListener));
 
                 vt = new KURY_Transmitter(ipAddr, port, nickname);
