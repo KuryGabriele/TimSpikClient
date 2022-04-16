@@ -110,8 +110,46 @@ namespace WindowsFormsApp1 {
                 audioSources.ElementAt(index).AddSamples(data, 20, data.Length - 20);
                 //Start the audio output
                 audioOutputs.ElementAt(index).Play();
-            } else if (kuryString.Equals("UPDT")) {
+            } else if (kuryString.Contains("JOIN") || kuryString.Contains("QUIT")) {
                 form.updateOnlineUsers();
+
+                //Find sender
+                var streamNick = Encoding.UTF8.GetString(data, 4, 16);
+                streamNick = streamNick.Trim();
+                int index = users.FindIndex(x => x.StartsWith(streamNick));
+
+                if (kuryString.Contains("JOIN")) {
+                    if (index < 0) {
+                        //Add user to list
+                        users.Add(streamNick);
+
+                        //Create a buffer
+                        var buffer = new BufferedWaveProvider(new WaveFormat(48000, 16, 2));
+                        buffer.BufferLength = 2560 * 24;
+                        buffer.DiscardOnBufferOverflow = true;
+                        audioSources.Add(buffer);
+
+                        //Initialize audio output
+                        var audioOut = new WaveOut();
+                        Guid deviceID = Form1.OUT_ID;
+                        var audioDevice = new DirectSoundOut(deviceID);
+                        audioDevice.Init(buffer);
+
+                        //Add to list
+                        audioOutputs.Add(audioDevice);
+                        userVolumes.Add(audioOut);
+                    }
+                } else {
+                    if (index >= 0) {
+                        //Remove user
+                        users.RemoveAt(index);
+                        audioSources.RemoveAt(index);
+                        audioOutputs.ElementAt(index).Stop();
+                        audioOutputs.ElementAt(index).Dispose();
+                        audioOutputs.RemoveAt(index);
+                        userVolumes.RemoveAt(index);
+                    }
+                }
             } else {
                 throw new IndexOutOfRangeException("Not a KURY packet");
             }

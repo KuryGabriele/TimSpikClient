@@ -100,6 +100,8 @@ namespace WindowsFormsApp1
             string response = await apiClient.GetStringAsync("https://timspik.ddns.net/getOnlineUsers");
             var data = JsonConvert.DeserializeObject<List<OnlineUser>>(response);
 
+            usersOnline.Clear();
+            usrImagesUrl.Clear();
             foreach (var usr in data) {
                 usersOnline.Add(usr.nick);
                 usrImagesUrl.Add(usr.img);
@@ -115,13 +117,14 @@ namespace WindowsFormsApp1
             //Used to close the app
             if(!closeConfirmation || MessageBox.Show("Sei sicuro di voler abbandonare i tuoi amici?", "Chiudere?", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes) {
                 if (inRoom) {
+                    HttpWebRequest request = (HttpWebRequest)WebRequest.Create("https://timspik.ddns.net/setOnline/" + nickname + "/F");
+                    request.GetResponse();
+
                     //stop the audio
                     vt.sendQuit();
                     trd.Abort();
                     trd2.Abort();
                 }
-                HttpWebRequest request = (HttpWebRequest)WebRequest.Create("https://timspik.ddns.net/setOnline/" + nickname + "/F");
-                request.GetResponse();
 
                 this.Close();
             }
