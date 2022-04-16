@@ -100,7 +100,6 @@ namespace WindowsFormsApp1 {
             }
 
             socket.Send(packet, packet.Length);
-            socket.Send(packet, packet.Length);
         }
     }
 }

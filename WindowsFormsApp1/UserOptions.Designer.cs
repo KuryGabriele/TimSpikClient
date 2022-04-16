@@ -32,9 +32,13 @@
             this.img_container = new System.Windows.Forms.FlowLayoutPanel();
             this.msg_btn = new System.Windows.Forms.Button();
             this.kick_btn = new System.Windows.Forms.Button();
+            this.panel3 = new System.Windows.Forms.Panel();
+            this.firstJoinLabel = new System.Windows.Forms.Label();
+            this.lastSeenLabel = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             this.optionsContainer.SuspendLayout();
             this.panel2.SuspendLayout();
+            this.panel3.SuspendLayout();
             this.SuspendLayout();
             // 
             // close_btn
@@ -64,6 +68,7 @@
             // 
             this.optionsContainer.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(38)))), ((int)(((byte)(54)))));
             this.optionsContainer.Controls.Add(this.panel2);
+            this.optionsContainer.Controls.Add(this.panel3);
             this.optionsContainer.Location = new System.Drawing.Point(3, 114);
             this.optionsContainer.Name = "optionsContainer";
             this.optionsContainer.Size = new System.Drawing.Size(570, 283);
@@ -136,6 +141,39 @@
             this.kick_btn.Text = "Kick";
             this.kick_btn.UseVisualStyleBackColor = false;
             // 
+            // panel3
+            // 
+            this.panel3.Controls.Add(this.lastSeenLabel);
+            this.panel3.Controls.Add(this.firstJoinLabel);
+            this.panel3.Location = new System.Drawing.Point(209, 3);
+            this.panel3.Name = "panel3";
+            this.panel3.Size = new System.Drawing.Size(200, 85);
+            this.panel3.TabIndex = 2;
+            // 
+            // firstJoinLabel
+            // 
+            this.firstJoinLabel.AutoSize = true;
+            this.firstJoinLabel.BackColor = System.Drawing.Color.Transparent;
+            this.firstJoinLabel.Font = new System.Drawing.Font("Arial", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.firstJoinLabel.ForeColor = System.Drawing.Color.White;
+            this.firstJoinLabel.Location = new System.Drawing.Point(3, 10);
+            this.firstJoinLabel.Name = "firstJoinLabel";
+            this.firstJoinLabel.Size = new System.Drawing.Size(67, 17);
+            this.firstJoinLabel.TabIndex = 1;
+            this.firstJoinLabel.Text = "First join:";
+            // 
+            // lastSeenLabel
+            // 
+            this.lastSeenLabel.AutoSize = true;
+            this.lastSeenLabel.BackColor = System.Drawing.Color.Transparent;
+            this.lastSeenLabel.Font = new System.Drawing.Font("Arial", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lastSeenLabel.ForeColor = System.Drawing.Color.White;
+            this.lastSeenLabel.Location = new System.Drawing.Point(3, 38);
+            this.lastSeenLabel.Name = "lastSeenLabel";
+            this.lastSeenLabel.Size = new System.Drawing.Size(76, 17);
+            this.lastSeenLabel.TabIndex = 2;
+            this.lastSeenLabel.Text = "Last seen:";
+            // 
             // UserOptions
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -154,6 +192,8 @@
             this.optionsContainer.ResumeLayout(false);
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
+            this.panel3.ResumeLayout(false);
+            this.panel3.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -169,5 +209,8 @@
         private NAudio.Gui.VolumeSlider volumeSlider;
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Panel panel3;
+        private System.Windows.Forms.Label lastSeenLabel;
+        private System.Windows.Forms.Label firstJoinLabel;
     }
 }

@@ -6,7 +6,6 @@ using System.Net;
 using System.Net.Http;
 using System.Threading;
 using System.Windows.Forms;
-using TimSpik;
 using VisioForge.Libs.Newtonsoft.Json;
 
 namespace WindowsFormsApp1
@@ -92,7 +91,6 @@ namespace WindowsFormsApp1
             ipAddr = data.address;
             port = data.port;
         }
-
         public async void updateOnlineUsers() {
             userPane.Controls.Clear();
 
@@ -344,7 +342,6 @@ namespace WindowsFormsApp1
         private async void muteBtn_Click(object sender, EventArgs e) {
             if (isMuted) {
                 //If user muted unmute
-
                 HttpClient apiClient = new HttpClient();
                 string response = await apiClient.GetStringAsync("https://timspik.ddns.net/getUserVolumes/" + nickname);
                 var data = JsonConvert.DeserializeObject<List<UserAudioSettings>>(response);
@@ -358,10 +355,10 @@ namespace WindowsFormsApp1
                 muteAudioBtn.Text = "Muta audio";
             } else {
                 //If user unmuted mute
-                
-                //Retrive last volume
 
-                //TODO Richista api
+                foreach (var usr in usersOnline) {
+                    rcv.changeVolume(usr, 0);
+                }
 
                 //Change ui
                 isMuted = true;

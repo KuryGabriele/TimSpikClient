@@ -1,12 +1,10 @@
 ﻿using NAudio.Wave;
-using NAudio.Mixer;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
-using System.Threading;
 
 namespace WindowsFormsApp1 {
     public class KURY_Receiver {
@@ -111,7 +109,9 @@ namespace WindowsFormsApp1 {
                 //Start the audio output
                 audioOutputs.ElementAt(index).Play();
             } else if (kuryString.Contains("JOIN") || kuryString.Contains("QUIT")) {
-                form.updateOnlineUsers();
+                //Update ui
+                Action safeUpdate = delegate { form.updateOnlineUsers(); };
+                form.Invoke(safeUpdate);
 
                 //Find sender
                 var streamNick = Encoding.UTF8.GetString(data, 4, 16);
