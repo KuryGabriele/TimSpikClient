@@ -67,7 +67,7 @@ namespace WindowsFormsApp1 {
             //Open socket
             socket = new UdpClient(port);
             //Prepare endpoint
-            gEP = new IPEndPoint(IPAddress.Parse(serverAddress), port);
+            gEP = new IPEndPoint(IPAddress.Any, port);
             try {
                 //Start getting packets
                 start();
@@ -96,18 +96,25 @@ namespace WindowsFormsApp1 {
             }
         }
 
-        private void parsePacket(Byte[] data) {
+        private async void parsePacket(Byte[] data) {
             //Verify if packet is a KURY packet
             kuryString = Encoding.UTF8.GetString(data, 0, 4);
             if(kuryString.Equals("KURY")) {
                 //Get users nickname
                 var streamNick = Encoding.UTF8.GetString(data, 4, 16);
                 streamNick = streamNick.Trim();
+                //Find the right index for the player
                 int index = users.FindIndex(x => x.StartsWith(streamNick));
-                //Push audio to right device
-                audioSources.ElementAt(index).AddSamples(data, 20, data.Length - 20);
-                //Start the audio output
-                audioOutputs.ElementAt(index).Play();
+                //If found push audio
+                if(index >= 0) {
+                    //Push audio to right device
+                    audioSources.ElementAt(index).AddSamples(data, 20, data.Length - 20);
+                    //Start the audio output if it has at least 3 packets already, if not
+                    //audio will not play for some reason
+                    if (audioSources.ElementAt(index).BufferedBytes >= data.Length * 3) {
+                        audioOutputs.ElementAt(index).Play();
+                    }
+                }
             } else if (kuryString.Contains("JOIN") || kuryString.Contains("QUIT")) {
                 //Update ui
                 Action safeUpdate = delegate { form.updateOnlineUsers(); };

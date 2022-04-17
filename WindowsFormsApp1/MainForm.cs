@@ -5,6 +5,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using VisioForge.Libs.Newtonsoft.Json;
 
@@ -91,7 +92,7 @@ namespace WindowsFormsApp1
             ipAddr = data.address;
             port = data.port;
         }
-        public async void updateOnlineUsers() {
+        public async Task<bool> updateOnlineUsers() {
             userPane.Controls.Clear();
 
             HttpClient apiClient = new HttpClient();
@@ -105,6 +106,8 @@ namespace WindowsFormsApp1
                 usrImagesUrl.Add(usr.img);
                 addUser(usr.nick);
             }
+
+            return true;
         }
 
         private void closeBtn_Click(object sender, EventArgs e) {
@@ -282,6 +285,8 @@ namespace WindowsFormsApp1
                 HttpClient apiClient = new HttpClient();
                 string response = await apiClient.GetStringAsync("https://timspik.ddns.net/setOnline/" + nickname + "/F");
 
+                vt.sendQuit();
+
                 //Remove from ui
                 updateOnlineUsers();
                 
@@ -290,7 +295,6 @@ namespace WindowsFormsApp1
                 rcv.socket.Dispose();
 
                 //Stop the transmitter
-                vt.sendQuit();
                 KURY_Transmitter.wi.StopRecording();
 
                 //Stop the threads
@@ -306,7 +310,7 @@ namespace WindowsFormsApp1
                 HttpClient apiClient = new HttpClient();
                 string response = await apiClient.GetStringAsync("https://timspik.ddns.net/setOnline/" + nickname + "/T");
 
-                updateOnlineUsers();
+                bool done = await updateOnlineUsers();
                 settingsBtn.Enabled = false;
 
                 //Start audio streams

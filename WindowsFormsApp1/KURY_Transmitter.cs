@@ -60,7 +60,6 @@ namespace WindowsFormsApp1 {
             var b = Encoding.UTF8.GetBytes("KURY".ToCharArray(), 0, 4);
 
             var n = new byte[16];
-
             var nickChars = nick.ToCharArray();
             var nickByte = Encoding.UTF8.GetBytes(nickChars, 0, nickChars.Length);
             nickByte.CopyTo(n, 0);
