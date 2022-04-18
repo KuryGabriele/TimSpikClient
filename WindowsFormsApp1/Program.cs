@@ -11,9 +11,15 @@ namespace WindowsFormsApp1
         [STAThread]
         static void Main()
         {
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1());
+            try {
+                Application.EnableVisualStyles();
+                Application.SetCompatibleTextRenderingDefault(false);
+                Application.Run(new Form1());
+            } catch (Exception ex) {
+                MessageBox.Show(ex.Message, "Errore, l'app verrà chiusa", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Application.Exit();
+            }
+            
         }
     }
 }

@@ -67,6 +67,7 @@ namespace WindowsFormsApp1
             usersOnline = new List<string>();
             usrImagesUrl = new List<string>();
             usersImages = new List<FlowLayoutPanel>();
+            checkOnline();
 
             //Fetch online users
             updateOnlineUsers();
@@ -92,6 +93,20 @@ namespace WindowsFormsApp1
             
             //Volume
             //TODO richiesta api
+        }
+
+        private async void checkOnline() {
+            try {
+                HttpClient apiClient = new HttpClient();
+                string response = await apiClient.GetStringAsync("https://timspik.ddns.net/test");
+
+                if (!response.Contains("working")) {
+                    MessageBox.Show("La API non risponde correttamente, scrivi a Kury :D", "Errore", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            } catch (Exception ex) {
+                MessageBox.Show("La API non risponde correttamente, scrivi a Kury :D", "Errore", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Close();
+            }
         }
 
         private async void fetchServerAddress() {
