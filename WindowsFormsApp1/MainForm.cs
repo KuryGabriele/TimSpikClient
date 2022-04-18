@@ -32,6 +32,9 @@ namespace WindowsFormsApp1
         public string ipAddr = ""; //Server's ip address
         public int port = 6981;
         float lastVolume; //Used to mute input audio and reset it
+        private int sr = 48000;
+        private int bits = 16;
+        private int channels = 2;
 
 
         internal class OnlineUser {
@@ -44,6 +47,12 @@ namespace WindowsFormsApp1
         internal class AudioServerAddressRequest {
             public string address { get; set; }
             public int port { get; set; }
+        }
+
+        internal class AudioSettings {
+            public int sampleRate { get; set; }
+            public int bits { get; set; }
+            public int channels { get; set; }
         }
 
         internal class UserAudioSettings {
@@ -68,10 +77,11 @@ namespace WindowsFormsApp1
 
             //Fetch ipAddress and port from api
             fetchServerAddress();
-            
+            fetchAudioSettigns();
+
 
             //Nickname
-            if(kus.Nick == "User") {
+            if (kus.Nick == "User") {
                 NickRequest nr = new NickRequest();
                 nr.ShowDialog();
                 kus.Nick = nickname;
@@ -92,6 +102,17 @@ namespace WindowsFormsApp1
             ipAddr = data.address;
             port = data.port;
         }
+
+        private async void fetchAudioSettigns() {
+            HttpClient apiClient = new HttpClient();
+            string response = await apiClient.GetStringAsync("https://timspik.ddns.net/getAudioSettings");
+            var data = JsonConvert.DeserializeObject<AudioSettings>(response);
+
+            sr = data.sampleRate;
+            bits = data.bits;
+            channels = data.channels;
+        }
+
         public async Task<bool> updateOnlineUsers() {
             userPane.Controls.Clear();
 
@@ -314,10 +335,10 @@ namespace WindowsFormsApp1
                 settingsBtn.Enabled = false;
 
                 //Start audio streams
-                rcv = new KURY_Receiver(usersOnline, ipAddr, port, this);
+                rcv = new KURY_Receiver(usersOnline, ipAddr, port, this, sr, bits, channels);
                 trd = new Thread(new ThreadStart(startListener));
 
-                vt = new KURY_Transmitter(ipAddr, port, nickname);
+                vt = new KURY_Transmitter(ipAddr, port, nickname, sr, bits, channels);
                 trd2 = new Thread(new ThreadStart(startTransmitter));
 
                 trd.IsBackground = true;

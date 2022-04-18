@@ -14,6 +14,9 @@ namespace WindowsFormsApp1 {
         public bool keepAlive = true; //false to stop receiver
         string kuryString; //stores the fist 4 bytes of every packet
         string serverAddress;
+        private int sr;
+        private int bits;
+        private int channels;
         int port;
 
         List<DirectSoundOut> audioOutputs;//Audio outputs for each user
@@ -23,11 +26,14 @@ namespace WindowsFormsApp1 {
         List<float> volumes;
         Form1 form;
 
-        public KURY_Receiver(List<String> users, String address, int port, Form1 form) {
+        public KURY_Receiver(List<String> users, String address, int port, Form1 form, int sr, int bits, int channels) {
             this.users = users;
             this.serverAddress = address;
             this.port = port;   
             this.form = form;
+            this.sr = sr;
+            this.bits = bits;
+            this.channels = channels;
 
             audioSources = new List<BufferedWaveProvider> ();
             audioOutputs = new List<DirectSoundOut> ();
@@ -36,7 +42,7 @@ namespace WindowsFormsApp1 {
 
             foreach (String usr in this.users) {
                 //Audio buffer initialization
-                var buffer = new BufferedWaveProvider(new WaveFormat(48000, 16, 2));
+                var buffer = new BufferedWaveProvider(new WaveFormat(sr, bits, channels));
                 buffer.BufferLength = 2560 * 24;
                 buffer.DiscardOnBufferOverflow = true;
 
@@ -131,7 +137,7 @@ namespace WindowsFormsApp1 {
                         users.Add(streamNick);
 
                         //Create a buffer
-                        var buffer = new BufferedWaveProvider(new WaveFormat(48000, 16, 2));
+                        var buffer = new BufferedWaveProvider(new WaveFormat(sr, bits, channels));
                         buffer.BufferLength = 2560 * 24;
                         buffer.DiscardOnBufferOverflow = true;
                         audioSources.Add(buffer);

@@ -11,14 +11,21 @@ namespace WindowsFormsApp1 {
         private int port = 6981;
         private string ipAddr = "192.168.1.3";
         private string nick;
+        private int sr;
+        private int bits;
+        private int channels;
 
-        public KURY_Transmitter(string ipAddr, int port, string nick) {
+        public KURY_Transmitter(string ipAddr, int port, string nick, int sr, int bits, int channels) {
             //Audio stuff
             Console.WriteLine("Transmitter started");
             this.ipAddr = ipAddr;
             this.port = port;
+            this.sr = sr;
+            this.bits = bits;
+            this.channels = channels;
+
             wi = new WaveIn();
-            wi.WaveFormat = new WaveFormat(48000, 16, 2);
+            wi.WaveFormat = new WaveFormat(sr, bits, channels);
             wi.DeviceNumber = 0;
 
             wi.DataAvailable += new EventHandler<WaveInEventArgs>(sendData);
