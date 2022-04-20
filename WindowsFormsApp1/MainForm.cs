@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -8,6 +9,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using VisioForge.Libs.Newtonsoft.Json;
+using System.Text;
+using System.Diagnostics;
 
 namespace WindowsFormsApp1
 {
@@ -60,9 +63,15 @@ namespace WindowsFormsApp1
             public float volume { get; set; }
         }
 
-        public Form1() {
+        internal class UpdaterVersion {
+            public int version { get; set; }
+            public string url { get; set; }
+        }
 
+        public Form1() {
             InitializeComponent();
+            fetchLastUpdaterVersion();
+            checkTimSpikVersion();
             //User lists
             usersOnline = new List<string>();
             usrImagesUrl = new List<string>();
@@ -80,7 +89,6 @@ namespace WindowsFormsApp1
             fetchServerAddress();
             fetchAudioSettigns();
 
-
             //Nickname
             if (kus.Nick == "User") {
                 NickRequest nr = new NickRequest();
@@ -90,9 +98,6 @@ namespace WindowsFormsApp1
                 kus.Save();
             }
             nickname = kus.Nick;
-            
-            //Volume
-            //TODO richiesta api
         }
 
         private async void checkOnline() {
@@ -126,6 +131,65 @@ namespace WindowsFormsApp1
             sr = data.sampleRate;
             bits = data.bits;
             channels = data.channels;
+        }
+
+        private async void fetchLastUpdaterVersion() {
+            //Fetch version from api
+            HttpClient apiClient = new HttpClient();
+            string response = await apiClient.GetStringAsync("https://timspik.ddns.net/getLastUpdaterVersion");
+            var data = JsonConvert.DeserializeObject<UpdaterVersion>(response);
+            int version = data.version;
+            string url = data.url;
+
+            if (File.Exists(@"updaterVersion.json")) {
+                //Get local version
+                string json = File.ReadAllText(@"updaterVersion.json");
+                var localData = JsonConvert.DeserializeObject<UpdaterVersion>(json);
+                int localVersion = localData.version;
+
+                if (localVersion < version) {
+                    //If new version available download it
+                    MessageBox.Show("C'è un aggiornamento disponibile. Non mi interessa se vuoi parlare con i tuoi amici, sono peggio di Windows e mi aggiorno. Fottiti 😸", "Aggiornamento", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    using (var client = new WebClient()) {
+                        client.DownloadFile(url, "TimSpikUpdater.exe");
+                    }
+                    //Update local file
+                    File.WriteAllText(@"updaterVersion.json", response);
+                    //Open updater
+                    Process.Start(@"TimSpikUpdater.exe");
+                    closeApp();
+                }
+            } else {
+                //If file not present update anyway.
+                File.WriteAllText(@"updaterVersion.json", response);
+                using (var client = new WebClient()) {
+                    client.DownloadFile(url, "TimSpikUpdater.exe");
+                }
+            }
+        }
+
+        private async void checkTimSpikVersion() {
+            HttpClient apiClient = new HttpClient();
+            string response = await apiClient.GetStringAsync("https://timspik.ddns.net/getLastAppVersion");
+            var data = JsonConvert.DeserializeObject<UpdaterVersion>(response);
+            int version = data.version;
+
+            if (File.Exists(@"timSpikVersion.json")) {
+                //Get local version
+                string json = File.ReadAllText(@"timSpikVersion.json");
+                var localData = JsonConvert.DeserializeObject<UpdaterVersion>(json);
+                int localVersion = localData.version;
+
+                if (localVersion < version) {
+                    MessageBox.Show("C'è un aggiornamento disponibile. Non mi interessa se vuoi parlare con i tuoi amici, sono peggio di Windows e mi aggiorno. Fottiti 😸", "Aggiornamento", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    Process.Start(@"TimSpikUpdater.exe");
+                    closeApp();
+                }
+            } else {
+                MessageBox.Show("C'è un aggiornamento disponibile. Non mi interessa se vuoi parlare con i tuoi amici, sono peggio di Windows e mi aggiorno. Fottiti 😸", "Aggiornamento", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                Process.Start(@"TimSpikUpdater.exe");
+                closeApp();
+            }
         }
 
         public async Task<bool> updateOnlineUsers() {

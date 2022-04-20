@@ -16,7 +16,7 @@ namespace WindowsFormsApp1
                 Application.SetCompatibleTextRenderingDefault(false);
                 Application.Run(new Form1());
             } catch (Exception ex) {
-                MessageBox.Show(ex.Message, "Errore, l'app verrà chiusa", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(ex.Message + "\n" + ex.StackTrace, "Errore, l'app verrà chiusa", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 Application.Exit();
             }
             
