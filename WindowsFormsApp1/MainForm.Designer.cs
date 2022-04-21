@@ -42,7 +42,7 @@
             this.joinBtn = new System.Windows.Forms.Button();
             this.settingsBtn = new System.Windows.Forms.Button();
             this.muteAudioBtn = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
+            this.muteBtn = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.logoBox)).BeginInit();
             this.panel2.SuspendLayout();
             this.SuspendLayout();
@@ -212,22 +212,23 @@
             this.muteAudioBtn.TabIndex = 8;
             this.muteAudioBtn.Text = "Muta audio";
             this.muteAudioBtn.UseVisualStyleBackColor = false;
-            this.muteAudioBtn.Click += new System.EventHandler(this.muteBtn_Click);
+            this.muteAudioBtn.Click += new System.EventHandler(this.muteAudioBtn_Click);
             // 
-            // button3
+            // muteBtn
             // 
-            this.button3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(38)))), ((int)(((byte)(54)))));
-            this.button3.Enabled = false;
-            this.button3.FlatAppearance.BorderSize = 0;
-            this.button3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button3.Font = new System.Drawing.Font("Arial", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(119)))), ((int)(((byte)(0)))));
-            this.button3.Location = new System.Drawing.Point(195, 525);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(80, 80);
-            this.button3.TabIndex = 9;
-            this.button3.Text = "Mutati";
-            this.button3.UseVisualStyleBackColor = false;
+            this.muteBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(38)))), ((int)(((byte)(54)))));
+            this.muteBtn.Enabled = false;
+            this.muteBtn.FlatAppearance.BorderSize = 0;
+            this.muteBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.muteBtn.Font = new System.Drawing.Font("Arial", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.muteBtn.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(119)))), ((int)(((byte)(0)))));
+            this.muteBtn.Location = new System.Drawing.Point(195, 525);
+            this.muteBtn.Name = "muteBtn";
+            this.muteBtn.Size = new System.Drawing.Size(80, 80);
+            this.muteBtn.TabIndex = 9;
+            this.muteBtn.Text = "Mutati";
+            this.muteBtn.UseVisualStyleBackColor = false;
+            this.muteBtn.Click += new System.EventHandler(this.muteBtn_Click);
             // 
             // Form1
             // 
@@ -235,7 +236,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(38)))), ((int)(((byte)(48)))), ((int)(((byte)(64)))));
             this.ClientSize = new System.Drawing.Size(1055, 623);
-            this.Controls.Add(this.button3);
+            this.Controls.Add(this.muteBtn);
             this.Controls.Add(this.muteAudioBtn);
             this.Controls.Add(this.settingsBtn);
             this.Controls.Add(this.joinBtn);
@@ -273,7 +274,7 @@
         private System.Windows.Forms.Button joinBtn;
         private System.Windows.Forms.Button settingsBtn;
         private System.Windows.Forms.Button muteAudioBtn;
-        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Button muteBtn;
     }
 }
 

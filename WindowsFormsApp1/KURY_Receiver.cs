@@ -61,7 +61,9 @@ namespace WindowsFormsApp1 {
         
         public void changeVolume(string nick, float volume) {
             int index = users.FindIndex(x => x.StartsWith(nick));
-            userVolumes.ElementAt(index).Volume = volume;
+            if(index != -1) {
+                userVolumes.ElementAt(index).Volume = volume;
+            }
         }
 
         public float getVolume(string nick) {

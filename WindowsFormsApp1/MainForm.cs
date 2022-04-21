@@ -59,7 +59,7 @@ namespace WindowsFormsApp1
         }
 
         internal class UserAudioSettings {
-            public string nickname { get; set; }
+            public string nick { get; set; }
             public float volume { get; set; }
         }
 
@@ -405,6 +405,8 @@ namespace WindowsFormsApp1
                 joinBtn.Text = "Entra";
                 inRoom = false;
                 settingsBtn.Enabled = true;
+                muteAudioBtn.Enabled = false;
+                muteBtn.Enabled = false;
             } else {
                 //Join channel
                 HttpClient apiClient = new HttpClient();
@@ -429,6 +431,16 @@ namespace WindowsFormsApp1
                 Console.WriteLine("Thread started");
                 joinBtn.Text = "Esci";
                 inRoom = true;
+                muteAudioBtn.Enabled = true;
+                muteBtn.Enabled = true;
+
+                //Set volumes
+                string responseVolume = await apiClient.GetStringAsync("https://timspik.ddns.net/getUserVolumes/" + nickname);
+                var data = JsonConvert.DeserializeObject<List<UserAudioSettings>>(responseVolume);
+
+                foreach (var usr in data) {
+                    rcv.changeVolume(usr.nick, usr.volume);
+                }
             }
         }
 
@@ -443,7 +455,7 @@ namespace WindowsFormsApp1
             kus.Save();
         }
 
-        private async void muteBtn_Click(object sender, EventArgs e) {
+        private async void muteAudioBtn_Click(object sender, EventArgs e) {
             if (isMuted) {
                 //If user muted unmute
                 HttpClient apiClient = new HttpClient();
@@ -451,7 +463,7 @@ namespace WindowsFormsApp1
                 var data = JsonConvert.DeserializeObject<List<UserAudioSettings>>(response);
 
                 foreach (var usr in data) {
-                    rcv.changeVolume(usr.nickname, usr.volume);
+                    rcv.changeVolume(usr.nick, usr.volume);
                 }
 
                 //Change ui
@@ -468,6 +480,10 @@ namespace WindowsFormsApp1
                 isMuted = true;
                 muteAudioBtn.Text = "Smuta audio";
             }            
+        }
+
+        private void muteBtn_Click(object sender, EventArgs e) {
+            MessageBox.Show("Il bottone non funziona, non lo ho implementato :D", "Sono pigro.", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
     }
 }
