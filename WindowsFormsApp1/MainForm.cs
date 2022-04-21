@@ -11,6 +11,8 @@ using System.Windows.Forms;
 using VisioForge.Libs.Newtonsoft.Json;
 using System.Text;
 using System.Diagnostics;
+using System.Windows.Media;
+using Color = System.Drawing.Color;
 
 namespace WindowsFormsApp1
 {
@@ -38,6 +40,8 @@ namespace WindowsFormsApp1
         private int sr = 48000;
         private int bits = 16;
         private int channels = 2;
+        public static string tsPath = Path.GetDirectoryName(Application.ExecutablePath);
+        public static string soundPack;
 
 
         internal class OnlineUser {
@@ -89,6 +93,8 @@ namespace WindowsFormsApp1
             fetchServerAddress();
             fetchAudioSettigns();
 
+            soundPack = kus.SoundPack;
+
             //Nickname
             if (kus.Nick == "User") {
                 NickRequest nr = new NickRequest();
@@ -98,6 +104,13 @@ namespace WindowsFormsApp1
                 kus.Save();
             }
             nickname = kus.Nick;
+        }
+
+        public void playSoundQueue(string filename) {
+            var mediaPlayer = new MediaPlayer();
+            mediaPlayer.Volume = 0.1;
+            mediaPlayer.Open(new Uri(tsPath + "\\audio\\" + soundPack + "\\" + filename));
+            mediaPlayer.Play();
         }
 
         private async void checkOnline() {
@@ -407,6 +420,7 @@ namespace WindowsFormsApp1
                 settingsBtn.Enabled = true;
                 muteAudioBtn.Enabled = false;
                 muteBtn.Enabled = false;
+                playSoundQueue("disconnected.wav");
             } else {
                 //Join channel
                 HttpClient apiClient = new HttpClient();
@@ -452,6 +466,7 @@ namespace WindowsFormsApp1
             //Get new value and save them
             kus.defaultGUID = OUT_ID;
             kus.defaultInputDevice = IN_ID;
+            kus.SoundPack = soundPack;
             kus.Save();
         }
 

@@ -5,6 +5,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
+using System.Windows.Media;
 
 namespace WindowsFormsApp1 {
     public class KURY_Receiver {
@@ -57,8 +58,17 @@ namespace WindowsFormsApp1 {
                 audioOutputs.Add(audioDevice);
                 userVolumes.Add(audioOut);
             }
+
+            playSoundQueue("connected.wav");
         }
-        
+
+        public void playSoundQueue(string filename) {
+            var mediaPlayer = new MediaPlayer();
+            mediaPlayer.Volume = 0.1;
+            mediaPlayer.Open(new Uri(Form1.tsPath + "\\audio\\" + Form1.soundPack + "\\" + filename));
+            mediaPlayer.Play();
+        }
+
         public void changeVolume(string nick, float volume) {
             int index = users.FindIndex(x => x.StartsWith(nick));
             if(index != -1) {
@@ -153,10 +163,12 @@ namespace WindowsFormsApp1 {
                         //Add to list
                         audioOutputs.Add(audioDevice);
                         userVolumes.Add(audioOut);
+                        playSoundQueue("user_enter.wav");
                     }
                 } else {
                     if (index >= 0) {
                         //Remove user
+                        playSoundQueue("user_left.wav");
                         users.RemoveAt(index);
                         audioSources.RemoveAt(index);
                         audioOutputs.ElementAt(index).Stop();

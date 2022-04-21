@@ -36,11 +36,17 @@ namespace WindowsFormsApp1 {
         }
 
         private void okBtn_Click(object sender, EventArgs e) {
-            if(listaUscita.SelectedIndex >= 0)
+            if(listaUscita.SelectedIndex >= 0) {
                 Form1.OUT_ID = ids[listaUscita.SelectedIndex];
+            }
 
-            if (listaEntrata.SelectedIndex >= 0)
+            if (listaEntrata.SelectedIndex >= 0) {
                 Form1.IN_ID = listaEntrata.SelectedIndex;
+            }
+
+            if(audioPack.SelectedIndex >= 0) {
+                Form1.soundPack = (string)audioPack.SelectedItem;
+            }
 
             this.Close();
         }
@@ -61,6 +67,10 @@ namespace WindowsFormsApp1 {
         private void panel1_MouseDown(object sender, MouseEventArgs e) {
             mouseDown = true;
             lastLocation = e.Location;
+        }
+
+        private void label3_Click(object sender, EventArgs e) {
+
         }
     }
 }

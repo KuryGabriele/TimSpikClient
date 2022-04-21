@@ -40,6 +40,17 @@ namespace WindowsFormsApp1 {
         }
 
         [UserScopedSetting()]
+        [DefaultSettingValue("Default")]
+        public string SoundPack {
+            get {
+                return ((string)this["SoundPack"]);
+            }
+            set {
+                this["SoundPack"] = (string)value;
+            }
+        }
+
+        [UserScopedSetting()]
         [DefaultSettingValue("1")]
         public float VolumeMic {
             get {
