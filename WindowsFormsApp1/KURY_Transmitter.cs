@@ -49,7 +49,7 @@ namespace WindowsFormsApp1 {
                 space[0] = '\t';
 
                 var spacesBytes = Encoding.UTF8.GetBytes(space, 0, 1);
-                for (int i = nick.Length; i < 16; i++) {
+                for (int i = nick.Length+4; i < 16; i++) {
                     spacesBytes.CopyTo(packet, i);
                 }
 
@@ -101,7 +101,7 @@ namespace WindowsFormsApp1 {
             space[0] = '\t';
 
             var spacesBytes = Encoding.UTF8.GetBytes(space, 0, 1);
-            for (int i = nick.Length; i < 16; i++) {
+            for (int i = nick.Length+4; i < 16; i++) {
                 spacesBytes.CopyTo(packet, i);
             }
 
