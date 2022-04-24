@@ -64,7 +64,7 @@ namespace WindowsFormsApp1 {
 
         public void playSoundQueue(string filename) {
             var mediaPlayer = new MediaPlayer();
-            mediaPlayer.Volume = 0.1;
+            mediaPlayer.Volume = 0.2;
             mediaPlayer.Open(new Uri(Form1.tsPath + "\\audio\\" + Form1.soundPack + "\\" + filename));
             mediaPlayer.Play();
         }

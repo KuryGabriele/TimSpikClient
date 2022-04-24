@@ -14,6 +14,7 @@ namespace WindowsFormsApp1 {
             InitializeComponent();
             ids = new List<Guid>();
             Guid defGuid = Form1.OUT_ID;
+            audioPack.SelectedItem = Form1.soundPack;
             int indiceMic;
             int j = 0;
 

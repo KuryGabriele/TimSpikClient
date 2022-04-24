@@ -26,12 +26,12 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Opzioni));
             this.okBtn = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.label3 = new System.Windows.Forms.Label();
+            this.audioPack = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
             this.listaEntrata = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
             this.listaUscita = new System.Windows.Forms.ComboBox();
-            this.label3 = new System.Windows.Forms.Label();
-            this.audioPack = new System.Windows.Forms.ComboBox();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -61,6 +61,34 @@
             this.panel1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.panel1_MouseDown);
             this.panel1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.panel1_MouseMove);
             this.panel1.MouseUp += new System.Windows.Forms.MouseEventHandler(this.panel1_MouseUp);
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("Arial", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(119)))), ((int)(((byte)(0)))));
+            this.label3.Location = new System.Drawing.Point(3, 95);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(80, 17);
+            this.label3.TabIndex = 5;
+            this.label3.Text = "Pack audio";
+            this.label3.Click += new System.EventHandler(this.label3_Click);
+            // 
+            // audioPack
+            // 
+            this.audioPack.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(38)))), ((int)(((byte)(54)))));
+            this.audioPack.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.audioPack.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.audioPack.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(119)))), ((int)(((byte)(0)))));
+            this.audioPack.FormattingEnabled = true;
+            this.audioPack.Items.AddRange(new object[] {
+            "Default",
+            "Thundy",
+            "Pheni"});
+            this.audioPack.Location = new System.Drawing.Point(83, 95);
+            this.audioPack.Name = "audioPack";
+            this.audioPack.Size = new System.Drawing.Size(399, 22);
+            this.audioPack.TabIndex = 4;
             // 
             // label2
             // 
@@ -107,33 +135,6 @@
             this.listaUscita.Name = "listaUscita";
             this.listaUscita.Size = new System.Drawing.Size(399, 22);
             this.listaUscita.TabIndex = 0;
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("Arial", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(119)))), ((int)(((byte)(0)))));
-            this.label3.Location = new System.Drawing.Point(3, 95);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(80, 17);
-            this.label3.TabIndex = 5;
-            this.label3.Text = "Pack audio";
-            this.label3.Click += new System.EventHandler(this.label3_Click);
-            // 
-            // audioPack
-            // 
-            this.audioPack.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(38)))), ((int)(((byte)(54)))));
-            this.audioPack.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.audioPack.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.audioPack.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(119)))), ((int)(((byte)(0)))));
-            this.audioPack.FormattingEnabled = true;
-            this.audioPack.Items.AddRange(new object[] {
-            "Default",
-            "Thundy"});
-            this.audioPack.Location = new System.Drawing.Point(83, 95);
-            this.audioPack.Name = "audioPack";
-            this.audioPack.Size = new System.Drawing.Size(399, 22);
-            this.audioPack.TabIndex = 4;
             // 
             // Opzioni
             // 
