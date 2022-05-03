@@ -34,6 +34,7 @@ namespace WindowsFormsApp1
         KURYUserSettings kus; //User settings instance
         public static string nickname; //Users nickname
         public static bool isMuted = false; //Is muted
+        public static bool micMuted = false;
         public string ipAddr = ""; //Server's ip address
         public int port = 6981;
         float lastVolume; //Used to mute input audio and reset it
@@ -447,6 +448,8 @@ namespace WindowsFormsApp1
                 inRoom = true;
                 muteAudioBtn.Enabled = true;
                 muteBtn.Enabled = true;
+                isMuted = false;
+                micMuted = false;
 
                 //Set volumes
                 string responseVolume = await apiClient.GetStringAsync("https://timspik.ddns.net/getUserVolumes/" + nickname);
@@ -483,22 +486,37 @@ namespace WindowsFormsApp1
 
                 //Change ui
                 isMuted = false;
+                vt.muted = false;
                 muteAudioBtn.Text = "Muta audio";
+                muteBtn.Enabled = true;
             } else {
                 //If user unmuted mute
-
                 foreach (var usr in usersOnline) {
                     rcv.changeVolume(usr, 0);
                 }
 
                 //Change ui
                 isMuted = true;
+                vt.muted = true;
                 muteAudioBtn.Text = "Smuta audio";
+                muteBtn.Enabled = false;
             }            
         }
 
         private void muteBtn_Click(object sender, EventArgs e) {
-            MessageBox.Show("Il bottone non funziona, non lo ho implementato :D", "Sono pigro.", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            //Toggle mute
+            micMuted = !micMuted;
+            vt.muted = micMuted;
+
+            //Change btn text
+            if (micMuted) {
+                muteBtn.Text = "Smutati";
+            } else {
+                muteBtn.Text = "Mutati";
+            }
+
+            //Disable or enable mute audio button
+            muteAudioBtn.Enabled = !micMuted;
         }
     }
 }

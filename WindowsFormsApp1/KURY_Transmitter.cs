@@ -14,6 +14,7 @@ namespace WindowsFormsApp1 {
         private int sr;
         private int bits;
         private int channels;
+        public bool muted = false;
 
         public KURY_Transmitter(string ipAddr, int port, string nick, int sr, int bits, int channels) {
             //Audio stuff
@@ -78,12 +79,15 @@ namespace WindowsFormsApp1 {
             for (int i = nick.Length; i < 16; i++) {
                 spacesBytes.CopyTo(n, i);
             }
-            
+
             //Audio data
             byte[] packet = new byte[b.Length + n.Length + e.Buffer.Length];
             Buffer.BlockCopy(b, 0, packet, 0, b.Length);
             Buffer.BlockCopy(n, 0, packet, 4, n.Length);
-            Buffer.BlockCopy(e.Buffer, 0, packet, b.Length + n.Length, e.Buffer.Length);
+
+            if (!muted) { 
+                Buffer.BlockCopy(e.Buffer, 0, packet, b.Length + n.Length, e.Buffer.Length);
+            }
             //Send
             socket.Send(packet, packet.Length);
         }
