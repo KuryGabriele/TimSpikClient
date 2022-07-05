@@ -167,7 +167,8 @@ namespace WindowsFormsApp1
                     using (var client = new WebClient()) {
                         client.DownloadFile(url, "TimSpikUpdater.exe");
                     }
-                    //Update local file
+                    //Update local file..
+
                     File.WriteAllText(@"updaterVersion.json", response);
                     //Open updater
                     Process.Start(@"TimSpikUpdater.exe");
@@ -394,7 +395,9 @@ namespace WindowsFormsApp1
         }
 
         private async void joinBtn_Click(object sender, EventArgs e) {
+            joinBtn.Enabled = false;
             if (inRoom) {
+                joinBtn.Text = "Uscendo...";
                 //If already in a channel exit
                 HttpClient apiClient = new HttpClient();
                 string response = await apiClient.GetStringAsync("https://timspik.ddns.net/setOnline/" + nickname + "/F");
@@ -423,6 +426,7 @@ namespace WindowsFormsApp1
                 muteBtn.Enabled = false;
                 playSoundQueue("disconnected.wav");
             } else {
+                joinBtn.Text = "Entrando...";
                 //Join channel
                 HttpClient apiClient = new HttpClient();
                 string response = await apiClient.GetStringAsync("https://timspik.ddns.net/setOnline/" + nickname + "/T");
@@ -459,6 +463,8 @@ namespace WindowsFormsApp1
                     rcv.changeVolume(usr.nick, usr.volume);
                 }
             }
+
+            joinBtn.Enabled = true;
         }
 
         private void settingsBtn_Click(object sender, EventArgs e) {
